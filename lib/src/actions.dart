@@ -86,8 +86,7 @@ class CustomSlidableAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveForegroundColor = foregroundColor ??
-        (ThemeData.estimateBrightnessForColor(backgroundColor) ==
-                Brightness.light
+        (ThemeData.estimateBrightnessForColor(backgroundColor) == Brightness.light
             ? Colors.black
             : Colors.white);
 
@@ -142,8 +141,9 @@ class SlidableAction extends StatelessWidget {
     this.label,
     this.borderRadius = BorderRadius.zero,
     this.padding,
+    this.iconWidget,
   })  : assert(flex > 0),
-        assert(icon != null || label != null),
+        assert(icon != null || label != null || iconWidget != null),
         super(key: key);
 
   /// {@macro slidable.actions.flex}
@@ -178,13 +178,16 @@ class SlidableAction extends StatelessWidget {
   /// Padding of the OutlinedButton
   final EdgeInsets? padding;
 
+  /// A widget to display above the [label].
+  final Widget? iconWidget;
+
   @override
   Widget build(BuildContext context) {
     final children = <Widget>[];
 
-    if (icon != null) {
+    if (icon != null || iconWidget != null) {
       children.add(
-        Icon(icon),
+        icon != null ? Icon(icon) : iconWidget!,
       );
     }
 
